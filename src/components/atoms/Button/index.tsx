@@ -17,14 +17,14 @@ export function Button({title, onPress}:ButtonProps){
 const styles = StyleSheet.create({
     button: {
         padding: 12,
-        backgroundColor: colors.secondary,
+        backgroundColor: colors.primary,
         alignItems: "center",
         justifyContent: "center",
         width: "80%",
         borderRadius: 8,
     },
     buttonText: {
-        color: colors.primary,
+        color: colors.secondary,
         fontWeight: "bold",
         textTransform: "uppercase"
     }
