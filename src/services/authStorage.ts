@@ -4,7 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const USER_KEY = "@login-app:user";
 
 // salva um objeto com email e senha no AsyncStorage
-export async function saveUser(user: { email: string; password: string }) {
+export async function saveUser(user: { name: string, surname: string, email: string; password: string }) {
     await AsyncStorage.setItem(USER_KEY, JSON.stringify(user))
 }
 

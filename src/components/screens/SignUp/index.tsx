@@ -8,6 +8,8 @@ import { colors } from "../../../styles/theme/color";
 import { StyleSheet } from "react-native";
 
 export function SignUp() {
+    const [name, setName] = useState("");
+    const [surname, setSurname] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -15,15 +17,17 @@ export function SignUp() {
 
     async function handleSignUp() {
         try {
-            if (!email || !password) {
+            if (!name || !surname || !email || !password) {
                 return Alert.alert("Erro", "Preencha todos os campos");
             }
 
-            await saveUser({ email, password });
+            await saveUser({ name, surname, email, password });
             const user = await getUser();
 
             console.log("Usuário salvo:", user);
             Alert.alert("Sucesso", "Cadastro realizado!");
+            setName("");
+            setSurname("");
             setEmail("");
             setPassword("");
 
@@ -36,6 +40,10 @@ export function SignUp() {
 
     return (
         <View style={styles.container}>
+            <View style={{flexDirection: "row", gap: "16", justifyContent: "center", alignItems: "center", width: "47%"}}>
+                <Input placeholder="Nome" value={name} onChangeText={setName} />
+                <Input placeholder="Sobrenome" value={surname} onChangeText={setSurname} />
+            </View>
             <Input placeholder="E-mail" value={email} onChangeText={setEmail} />
             <Input placeholder="Senha" secureTextEntry value={password} onChangeText={setPassword} />
             <Button title="Cadastre-se" onPress={handleSignUp} />
@@ -45,9 +53,9 @@ export function SignUp() {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1, 
-        justifyContent: "center", 
+        flex: 1,
+        justifyContent: "center",
         alignItems: "center",
-        backgroundColor: colors.primary,
-    }
+        backgroundColor: colors.secondary,
+    },
 })
