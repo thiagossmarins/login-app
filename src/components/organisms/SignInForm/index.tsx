@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { getUser } from "../../../services/authStorage";
-import { Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { EmailPasswordFields } from "../../molecules/EmailPasswordFields";
 import { Button } from "../../atoms/Button";
 import { AuthLink } from "../../molecules/AuthLink";
+import { ToastAlert } from "../../feedback/ToastAlert";
 
 export function SignInForm() {
     const [email, setEmail] = useState("")
@@ -14,19 +14,20 @@ export function SignInForm() {
 
     async function handleSignIn() {
         if (!email || !password) {
-            return Alert.alert("Erro", "Preencha todos os campos");
+            return ToastAlert("error", "Erro", "Preencha todos os campos")
         }
 
         const user = await getUser();
 
         if (!user) {
-            return Alert.alert("Erro", "Nenum usuário encontrado");
+            return ToastAlert("error", "Erro", "Nenum usuário encontrado");
         }
 
         if (user.email === email && user.password === password) {
+            ToastAlert("success", "Sucesso", "Login realizado com sucesso")
             navigation.navigate("Home" as never);
         } else {
-            Alert.alert("Erro", "E-mail ou senha incorretos");
+            ToastAlert("error", "Erro", "E-mail ou senha incorretos");
         }
     }
 

@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Alert } from "react-native";
 import { saveUser, getUser } from "../../../services/authStorage";
 import { NameSurnameFields } from "../../molecules/NameSurnameFields";
 import { EmailPasswordFields } from "../../molecules/EmailPasswordFields";
 import { Button } from "../../atoms/Button";
 import { AuthLink } from "../../molecules/AuthLink";
 import { useNavigation } from "@react-navigation/native";
+import { ToastAlert } from "../../feedback/ToastAlert";
 
 export function SignUpForm() {
     const [name, setName] = useState("");
@@ -18,14 +18,14 @@ export function SignUpForm() {
     async function handleSignUp() {
         try {
             if (!name || !surname || !email || !password) {
-                return Alert.alert("Erro", "Preencha todos os campos");
+                return ToastAlert("error", "Erro", "Preencha todos os campos");
             }
 
             await saveUser({ name, surname, email, password });
             const user = await getUser();
 
             console.log("Usuário salvo:", user);
-            Alert.alert("Sucesso", "Cadastro realizado!");
+            ToastAlert("success", "Sucesso", "Cadastro realizado!");
             setName("");
             setSurname("");
             setEmail("");
@@ -33,8 +33,7 @@ export function SignUpForm() {
 
             navigation.navigate("SignIn" as never)
         } catch (error) {
-            console.error("Erro no cadastro:", error);
-            Alert.alert("Erro", "Algo deu errado no cadastro.");
+            ToastAlert("error", "Erro", "Algo deu errado no cadastro.");
         }
     }
 
