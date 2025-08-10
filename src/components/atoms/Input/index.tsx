@@ -12,7 +12,9 @@ const styles = StyleSheet.create({
         width: "80%",
         padding: 12,
         borderRadius: 8,
-        backgroundColor: colors.lightGray,
+        backgroundColor: "transparent",
+        borderColor: colors.primary,
+        borderWidth: 1,
         color: colors.primary,
         marginBottom: 16
     }
